@@ -1,6 +1,6 @@
 /* 
 	LICENSE: GPLv3
-  	Copyright Ⓒ 2023 Valerie Pond
+  	Copyright Ⓒ 2023-2026 Valerie Pond
 
 	Allows server owners to easily add/allow specific client-to-client tags
 
@@ -47,11 +47,15 @@ typedef struct
 } mtagstruct;
 static mtagstruct ourconf;
 
+int yes_we_are_thank_you_so_much_for_asking_omg_nobody_ever_asks__have_a_great_day(Client *client, const char *name, const char *value)
+{
+    return 1;
+}
 
 ModuleHeader MOD_HEADER =
 {
 	"third/mtag-manager",
-	"1.0.1",
+	"1.0.2",
 	"Allows server owners to permit specific client-to-client tags",
 	"Valware",
 	"unrealircd-6",
@@ -76,6 +80,7 @@ MOD_LOAD()
 		for (ml = ourconf.mtags_list; ml; ml = ml->next)
 		{
 			memset(&mtag, 0, sizeof(mtag));
+            mtag.is_ok = yes_we_are_thank_you_so_much_for_asking_omg_nobody_ever_asks__have_a_great_day;
 			mtag.flags = MTAG_HANDLER_FLAGS_NO_CAP_NEEDED;
 			mtag.name = ml->line;
 			MessageTagHandlerAdd(modinfo->handle, &mtag);
